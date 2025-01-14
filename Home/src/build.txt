@@ -1,0 +1,1 @@
+c:\mingw64\bin\g++.exe -I"D:\Equation_Visualizer\src\include" -L"C:\SFML\lib" -o D:\Equation_Visualizer\Home\src\main.exe D:\Equation_Visualizer\Home\src\main.cpp -lsfml-graphics -lsfml-window -lsfml-system
