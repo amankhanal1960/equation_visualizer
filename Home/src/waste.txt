@@ -1,0 +1,100 @@
+// #include <D:\Equation_Visualizer\src\include\SFML\exprtk.hpp>
+
+// // Function to evaluate an equation using exprtk
+// float evaluateEquation(const std::string &equation, float x)
+// {
+//     typedef exprtk::symbol_table<float> symbol_table_t;
+//     typedef exprtk::expression<float> expression_t;
+//     typedef exprtk::parser<float> parser_t;
+
+//     // Setup the symbol table
+//     symbol_table_t symbol_table;
+//     symbol_table.add_variable("x", x);
+//     symbol_table.add_constants();
+
+//     // Setup the expression
+//     expression_t expression;
+//     expression.register_symbol_table(symbol_table);
+
+//     // Parse the equation
+//     parser_t parser;
+//     if (!parser.compile(equation, expression))
+//     {
+//         std::cerr << "Error parsing equation: " << parser.error() << "\n";
+//         return 0.0f; // Indicates failure
+//     }
+
+//     // Return the evaluated result
+//     return expression.value();
+// }
+
+// // Function to plot the graph
+// void plotGraph(const std::string &equation)
+// {
+//     // Validate the equation input
+//     if (equation.empty())
+//     {
+//         std::cerr << "Error: Equation is empty. Cannot plot graph.\n";
+//         return;
+//     }
+//     sf::RenderWindow graphWindow(sf::VideoMode({800, 600}), "Graph Window");
+
+//     // Define scaling factors for better visualization
+//     const float xScale = 50.0f;
+//     const float yScale = 50.0f;
+//     const float xOffset = 400.0f; // Center of the graph (X-axis)
+//     const float yOffset = 300.0f; // Center of the graph (Y-axis)
+
+//     // Create axes
+//     sf::VertexArray xAxis(sf::PrimitiveType::Lines, 2);
+//     xAxis[0].position = sf::Vector2f(0, yOffset);
+//     xAxis[0].color = sf::Color::White;
+//     xAxis[1].position = sf::Vector2f(800, yOffset);
+//     xAxis[1].color = sf::Color::White;
+
+//     sf::VertexArray yAxis(sf::PrimitiveType::Lines, 2);
+//     yAxis[0].position = sf::Vector2f(xOffset, 0);
+//     yAxis[0].color = sf::Color::White;
+//     yAxis[1].position = sf::Vector2f(xOffset, 600);
+//     yAxis[1].color = sf::Color::White;
+
+//     // Generate points for the graph
+//     sf::VertexArray graph(sf::PrimitiveType::LineStrip);
+//     for (float x = -400; x <= 400; x += 1.0f)
+//     {
+//         float scaledX = x / xScale; // Scale down the x-coordinate
+//         float y = evaluateEquation(equation, scaledX);
+
+//         // Check for evaluation failure
+//         if (y == 0.0f && equation.find("x") != std::string::npos)
+//         {
+//             continue; // Skip invalid points if equation depends on x
+//         }
+
+//         float screenX = xOffset + x;
+//         float screenY = yOffset - y * yScale; // Scale and invert Y for graph alignment
+
+//         // Add the point to the graph
+//         graph.append(sf::Vertex({sf::Vector2f({screenX, screenY}), sf::Color::Green}));
+//     }
+
+//     // Main loop to render the graph
+//     while (graphWindow.isOpen())
+//     {
+//         while (const std::optional<sf::Event> event = graphWindow.pollEvent())
+//         {
+//             // calling the is method inside event object and it is checking the type of event called..
+//             // sf::Event::Closed represents a constant value inside Event class..
+//             if (event->is<sf::Event::Closed>())
+//             {
+//                 graphWindow.close();
+//             }
+//         }
+
+//         graphWindow.clear(sf::Color::Black);
+//         graphWindow.draw(xAxis);
+//         graphWindow.draw(yAxis);
+//         graphWindow.draw(graph);
+//         graphWindow.display();
+//     }
+// }
