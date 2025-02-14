@@ -3,8 +3,10 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:\\SFML\\include",
                 "${workspaceFolder}/**",
+                "C:\\TGUI\\include",
+                "C:\\TGUI\\include\\TGUI\\extlibs\\Aurora",
+                "C:\\SFML\\include",
                 "C:\\mingw64\\include"
             ],
             "defines": [

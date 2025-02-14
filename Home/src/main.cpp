@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
+#include <TGUI/Backend/SFML-Graphics.hpp>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -14,6 +16,23 @@ int main()
 
     // create the window with full screen size
     sf::RenderWindow window(desktop, "My Window");
+
+    
+
+    tgui::Gui gui(window);
+    // std::cout << "TGUI initialized successfully.\n";
+
+    // if (!gui.getBackendRenderTarget())
+    // {
+    //     std::cerr << "Failed to initialize TGUI GUI\n";
+    //     return -1; // Return an error if the GUI cannot be initialized
+    // }    
+
+    // tgui::EditBox::Ptr editBox = tgui::EditBox::create();
+    // editBox->setSize(400, 50);
+    // editBox->setPosition(200, 275); // Position in the window
+    // editBox->setDefaultText("Enter text...");
+    // gui.add(editBox);
 
     // IMAGES
     //  Load an image into a texture
@@ -145,7 +164,6 @@ int main()
 
     text.setPosition({window.getSize().x * 0.31f, window.getSize().y * 0.58f}); // absolute position
 
-
     sf::Text Linear(font); // a font is required to make a text object
     Linear.setString("Linear");
     Linear.setCharacterSize(26); // in pixels, not points!
@@ -195,11 +213,11 @@ int main()
     Absolute.setStyle(sf::Text::Bold);
     Absolute.setPosition({window.getSize().x * 0.607f, window.getSize().y * 0.655f}); // absolute position
 
-    sf::Text userInput(font); // a font is required to make a text object
+    sf::Text userInput(font);       // a font is required to make a text object
     userInput.setCharacterSize(50); // in pixels, not points!
     userInput.setFillColor(sf::Color::Black);
     userInput.setPosition({window.getSize().x * 0.33f, window.getSize().y * 0.48f});
-    
+
     // Start the game loop
     while (window.isOpen())
     {
@@ -211,7 +229,15 @@ int main()
             {
                 window.close();
             }
+
+            // if (event.has_value()) {
+            //     // If the event is present, pass it to TGUI
+            //     gui.handleEvent(event.value());  // Use .value() to get the event
+            // }
         }
+
+        // std::string userInput = editBox->getText().toStdString();
+        // std::cout << "User Input: " << userInput << std::endl;
 
         if (!loadingComplete)
         {
@@ -269,31 +295,41 @@ int main()
             window.draw(Trignometric);
             window.draw(Logarithmic);
             window.draw(Absolute);
-            window.draw(userInput);
-            
+            // window.draw(userInput);
+
+            // gui.draw();  // Draw the TGUI elements
 
             while (const std::optional<sf::Event> event = window.pollEvent())
             {
-                
+                // Check for keyboard button press
+                if (event->is<sf::Event::KeyPressed>())
+                {
+                    if (event->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Escape)
+                    {
+                        std::cout << "Escape key pressed!" << std::endl;
+                    }
+                    else if (event->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Backspace)
+                    {
+                        if (!inputText.empty())
+                        {
+                            inputText.pop_back();
+                            std::cout << "Input after backspace: " << inputText << std::endl; // Debugging output
+                            // userInput.setString(inputText);
+                        }
+                    }
+                }
+
                 // calling the is method inside event object and it is checking the type of event called..
                 // sf::Event::Closed represents a constant value inside Event class..
                 if (event->is<sf::Event::TextEntered>())
                 {
-                    if (event->getIf<sf::Event::TextEntered>()->unicode == 8)
-                    { // Backspace key
-                        if (!inputText.empty())
-                        {
-                            inputText.pop_back();
-                           
-                        }
-                    }
-                    else if (event->getIf<sf::Event::TextEntered>()->unicode < 128)
+                    if (event->getIf<sf::Event::TextEntered>()->unicode < 128)
                     { // Printable ASCII
                         inputText += static_cast<char>(event->getIf<sf::Event::TextEntered>()->unicode);
-                        
+                        std::cout << "Input after adding character: " << inputText << std::endl; // Debugging output
                     }
-                    
-                    userInput.setString(inputText);
+
+                    // userInput.setString(inputText);
                 }
             }
         }

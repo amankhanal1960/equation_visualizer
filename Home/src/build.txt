@@ -1,1 +1,10 @@
-c:\mingw64\bin\g++.exe -I"D:\Equation_Visualizer\src\include" -L"C:\SFML\lib" -o D:\Equation_Visualizer\Home\src\main.exe D:\Equation_Visualizer\Home\src\main.cpp -lsfml-graphics -lsfml-window -lsfml-system
+c:\mingw64\bin\g++.exe -I"D:\Equation_Visualizer\src\include" -I"C:\TGUI\include" -L"C:\SFML\lib" -o D:\Equation_Visualizer\Home\src\main.exe D:\Equation_Visualizer\Home\src\main.cpp -lsfml-graphics -lsfml-window -lsfml-system
+
+
+& "c:\mingw64\bin\g++.exe" -I"D:\Equation_Visualizer\src\include" -I"C:\imgui-sfml\imgui" -I"C:\imgui-sfml" -L"C:\SFML\lib" `
+    -o"D:\Equation_Visualizer\Home\src\main.exe" "D:\Equation_Visualizer\Home\src\main.cpp" `
+    "C:\imgui-sfml\imgui\imgui.cpp" "C:\imgui-sfml\imgui\imgui_tables.cpp" "C:\imgui-sfml\imgui\imgui_draw.cpp" "C:\imgui-sfml\imgui\imgui_widgets.cpp" `
+    -l"imgui-sfml" -l"sfml-graphics" -l"sfml-window" -l"sfml-system" -l"gdi32" -l"comdlg32" -l"uuid" -l"oleaut32" -l"ole32" 
+
+
+c:\mingw64\bin\g++.exe -I"D:\Equation_Visualizer\src\include" -I"C:\TGUI\include" -L"C:\SFML\lib" -L"C:\TGUI\build\lib" -o D:\Equation_Visualizer\Home\src\main.exe D:\Equation_Visualizer\Home\src\main.cpp -lsfml-graphics -lsfml-window -lsfml-system -ltgui
